@@ -117,6 +117,11 @@ public class Minimizar extends javax.swing.JFrame {
             }
         });
 
+        filas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                filasMouseClicked(evt);
+            }
+        });
         filas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filasActionPerformed(evt);
@@ -131,6 +136,11 @@ public class Minimizar extends javax.swing.JFrame {
         crear.setFont(new java.awt.Font("Lucida Fax", 3, 12)); // NOI18N
         crear.setText("Generar Tabla");
         crear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        crear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                crearMouseClicked(evt);
+            }
+        });
         crear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 crearActionPerformed(evt);
@@ -563,6 +573,14 @@ public class Minimizar extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_filasKeyTyped
+
+    private void filasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filasMouseClicked
+        JOptionPane.showMessageDialog(null, "Al ingresar las restricciones suma 1 que es para la funcion objetivo ejmplo 2 restricciones mas 1 son 3 entonces colocas el 3 .");
+    }//GEN-LAST:event_filasMouseClicked
+
+    private void crearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_crearMouseClicked
 
     /**
      * @param args the command line arguments

@@ -1,20 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Archivo1;
 
 import Metodo_compilador.Metodo_ms;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.text.DecimalFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author onefr
- */
 public class Maximizar extends javax.swing.JFrame {
 
     fondo f = new fondo();
@@ -23,6 +17,7 @@ public class Maximizar extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setResizable(false);
+
     }
 
     /**
@@ -36,15 +31,17 @@ public class Maximizar extends javax.swing.JFrame {
 
         jP_principal = new fondo();
         jL_nv = new javax.swing.JLabel();
-        jT_NV = new javax.swing.JTextField();
+        columnas = new javax.swing.JTextField();
         jL_nR = new javax.swing.JLabel();
-        jT_NR = new javax.swing.JTextField();
+        filas = new javax.swing.JTextField();
         jB_GENERAR = new javax.swing.JButton();
         jB_CALCULAR = new javax.swing.JButton();
         jB_LIMPIAR = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabla = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jT_pro = new javax.swing.JTextArea();
+        text = new javax.swing.JTextArea();
         jB_regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -54,37 +51,82 @@ public class Maximizar extends javax.swing.JFrame {
         jL_nv.setFont(new java.awt.Font("Lucida Fax", 3, 14)); // NOI18N
         jL_nv.setText("Numero de Variables:");
 
-        jT_NV.addKeyListener(new java.awt.event.KeyAdapter() {
+        columnas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                columnasMouseClicked(evt);
+            }
+        });
+        columnas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jT_NVKeyTyped(evt);
+                columnasKeyTyped(evt);
             }
         });
 
         jL_nR.setFont(new java.awt.Font("Lucida Fax", 3, 14)); // NOI18N
         jL_nR.setText("Numero de Restricciones y FO:");
 
-        jT_NR.addKeyListener(new java.awt.event.KeyAdapter() {
+        filas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                filasMouseClicked(evt);
+            }
+        });
+        filas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jT_NRKeyTyped(evt);
+                filasKeyTyped(evt);
             }
         });
 
         jB_GENERAR.setFont(new java.awt.Font("Lucida Fax", 3, 14)); // NOI18N
         jB_GENERAR.setText("Generar Matriz");
         jB_GENERAR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jB_GENERAR.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jB_GENERARMouseClicked(evt);
+            }
+        });
+        jB_GENERAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_GENERARActionPerformed(evt);
+            }
+        });
 
         jB_CALCULAR.setFont(new java.awt.Font("Lucida Fax", 3, 18)); // NOI18N
         jB_CALCULAR.setText("Calcular");
         jB_CALCULAR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jB_CALCULAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_CALCULARActionPerformed(evt);
+            }
+        });
 
         jB_LIMPIAR.setFont(new java.awt.Font("Lucida Fax", 3, 18)); // NOI18N
         jB_LIMPIAR.setText("Limpiar");
         jB_LIMPIAR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jB_LIMPIAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_LIMPIARActionPerformed(evt);
+            }
+        });
 
-        jT_pro.setColumns(20);
-        jT_pro.setRows(5);
-        jT_pro.setEnabled(false);
-        jScrollPane2.setViewportView(jT_pro);
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane3.setViewportView(tabla);
+
+        jScrollPane1.setViewportView(jScrollPane3);
+
+        text.setColumns(20);
+        text.setRows(5);
+        text.setEnabled(false);
+        jScrollPane2.setViewportView(text);
 
         jB_regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Elementos/Regresar.png"))); // NOI18N
         jB_regresar.setBorder(null);
@@ -101,35 +143,37 @@ public class Maximizar extends javax.swing.JFrame {
         jP_principal.setLayout(jP_principalLayout);
         jP_principalLayout.setHorizontalGroup(
             jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jP_principalLayout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(jB_GENERAR)
-                .addGap(116, 116, 116)
-                .addComponent(jB_CALCULAR)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
-                .addComponent(jB_LIMPIAR)
-                .addGap(114, 114, 114))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_principalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(jL_nv, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jT_NV, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(columnas, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(54, 54, 54)
                 .addComponent(jL_nR, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jT_NR, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(filas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52))
             .addGroup(jP_principalLayout.createSequentialGroup()
+                .addGap(66, 66, 66)
                 .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jP_principalLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)))
+                        .addComponent(jB_GENERAR)
+                        .addGap(116, 116, 116)
+                        .addComponent(jB_CALCULAR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jB_LIMPIAR)
+                        .addGap(114, 114, 114))
                     .addGroup(jP_principalLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jB_regresar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jP_principalLayout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane1)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)))
+                            .addGroup(jP_principalLayout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(jB_regresar)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jP_principalLayout.setVerticalGroup(
             jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,9 +182,9 @@ public class Maximizar extends javax.swing.JFrame {
                 .addComponent(jB_regresar)
                 .addGap(18, 18, 18)
                 .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jT_NR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jL_nR)
-                    .addComponent(jT_NV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(columnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jL_nv))
                 .addGap(18, 18, 18)
                 .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -150,7 +194,7 @@ public class Maximizar extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -176,10 +220,9 @@ public class Maximizar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jB_regresarActionPerformed
 
-    private void jT_NVKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jT_NVKeyTyped
+    private void columnasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_columnasKeyTyped
         char val = evt.getKeyChar();
-        if (Character.isLetter(val))
-        {
+        if (Character.isLetter(val)) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(rootPane, "Ingresa solo caracteres numerico.");
@@ -187,50 +230,257 @@ public class Maximizar extends javax.swing.JFrame {
         }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jT_NVKeyTyped
+    }//GEN-LAST:event_columnasKeyTyped
 
-    private void jT_NRKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jT_NRKeyTyped
+    private void filasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filasKeyTyped
         char val = evt.getKeyChar();
-        if (Character.isLetter(val))
-        {
+        if (Character.isLetter(val)) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(rootPane, "Ingresa solo caracteres numerico.");
 
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jT_NRKeyTyped
+    }//GEN-LAST:event_filasKeyTyped
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jB_GENERARMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jB_GENERARMouseClicked
+
+    }//GEN-LAST:event_jB_GENERARMouseClicked
+
+    private void jB_GENERARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_GENERARActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        try {
+            int fila = Integer.parseInt(filas.getText());
+            int columna = Integer.parseInt(columnas.getText());
+            int columna1 = columna;
+
+            for (int i = 0; i < columna; i++) {
+                model.addColumn("x" + (i + 1));
+            }
+            columna = fila + columna;
+
+            model.setRowCount(fila);
+            model.setColumnCount(columna);
+            for (int j = columna1; j < columna; j++) {
+                tabla.setValueAt(0, 0, j);
+            }
+            int i1 = 1, j1 = columna1;
+            for (int i = 1; i < fila; i++) {
+                for (int j = columna1; j < columna - 1; j++) {
+                    if (i1 == i && j1 == j) {
+                        tabla.setValueAt(1, i, j);
+
+                    } else {
+                        tabla.setValueAt(0, i, j);
+                    }
+                }
+                j1++;
+                i1++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ingresa numeros y que sean positivos ");
+        }
+        JOptionPane.showMessageDialog(null, "En la primer fila colocar los valores de z en negativo, de lo"
+                + " contrario no dará los resultados correctos y al terminar de ingresar los valores a la tabla teclear enter para que se guarden los valores.");
+    }//GEN-LAST:event_jB_GENERARActionPerformed
+
+    private void columnasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_columnasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_columnasMouseClicked
+
+    private void jB_LIMPIARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_LIMPIARActionPerformed
+        columnas.setText(" ");
+        filas.setText(" ");
+        text.setText("");
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        model.setRowCount(0); // Elimina todas las filas de la tabla
+        model.setColumnCount(0); // Elimina todas las columnas de la tabla        // TODO add your handling code here:
+    }//GEN-LAST:event_jB_LIMPIARActionPerformed
+
+    private void jB_CALCULARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_CALCULARActionPerformed
+        text.append("metodo simplex\n");
+        DecimalFormat l = new DecimalFormat("0.000");
+        int fila = Integer.parseInt(filas.getText());
+        int columna = Integer.parseInt(columnas.getText());
+        int columna1 = columna;
+        columna = fila + columna;
+        double v[][] = new double[fila][columna];
+        int y1 = 1;
+
+        //Verificar que la tabla esté inicializada y tenga valores
+        if (tabla != null && tabla.getModel() != null) {
+            for (int i = 0; i < fila; i++) {
+                for (int j = 0; j < columna; j++) {
+                    Object value = tabla.getValueAt(i, j);
+                    if (value != null) {
+                        v[i][j] = Double.parseDouble(tabla.getValueAt(i, j).toString());
+                    } else {
+//Manejar el caso en el que el valor sea nulo, por ejemplo, establecerlo en 0
+                        v[i][j] = 0.0;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < fila; i++) {
+            if (i != 0) {
+                text.append("d" + i);
+            }
+            for (int j = 0; j < columna; j++) {
+                text.append("\t" + l.format(v[i][j]));
+
+            }
+            text.append("\n");
+        }
+        text.append("\n\n");
+        String v2[] = new String[fila];
+        int v3[] = new int[fila];
+        int v4[] = new int[fila];
+
+        int co = 0;
+        while (true) {
+            if (co == columna1) {
+                break;
+            }
+            int f = 0, c = 0;
+            double negativo = 0;
+            for (int i = 0; i < columna1; i++) {
+                if (v[0][i] < negativo) {
+                    negativo = v[0][i];
+                    c = i;
+
+                }
+
+            }
+            text.append("hallamos el valor del pivote");
+            text.append("" + negativo + "\n la columna es \n");
+
+            for (int i = 0; i < fila; i++) {
+                text.append("" + v[i][c] + "\n");
+
+            }
+            text.append("\n");
+            text.append("\n dividiendo la columna\n");
+            double menor = Double.MAX_VALUE; // Inicializamos 'menor' con un valor grande
+            double v1[] = new double[fila - 1];
+            int h = 0;
+            for (int i = 1; i < fila; i++) {
+                v1[h] = v[i][columna - 1] / v[i][c];
+                text.append("" + v[i][columna - 1] + "/" + v[i][c] + "=" + v1[h] + "\n");
+                h++;
+//                 Actualizamos 'menor' si encontramos un valor menor en v1
+                if (v1[h - 1] < menor) {
+                    menor = v1[h - 1];
+                    f = i;
+                }
+            }
+            text.append("el menor de la distancia es" + menor + "\n");
+            double piv = v[f][c];
+            text.append("el pivote es " + piv);
+
+            text.append("\n proceso de convertir a 1 el pivote, dividiendo toda la fila ");
+            for (int i = 0; i < columna; i++) {
+                double va  = v[f][i];
+                v[f][i] = v[f][i] / piv;
+                text.append("" + va+  "/" + piv + "=" + v[f][i] + "\n");
+
+            }
+            for (int i = 1; i < fila; i++) {
+                if (i == f) {
+                    v2[i] = "x" + (c + 1);
+                    v3[i] = c + 1;
+                    v4[i] = i;
+                }
+                if (v3[i] <= 0) {
+                    v2[i] = "d" + (i);
+                }
+            }
+            text.append("\n proceso \n");
+            for (int i = 0; i < fila; i++) {
+                if (i != f) {
+                    text.append("convierte la columna del pivote en cero ,en fila" + (i + 1) + "\n");
+
+                    double guar = 0;
+                    guar = -v[i][c];
+                    for (int j = 0; j < columna; j++) {
+                        double vaa = v[i][j];
+                        v[i][j] = guar * v[f][j] + v[i][j];
+                        text.append("" + guar + "a" + v[f][j] + "+" + vaa + "=" + v[i][j] + "\n");
+
+                    }
+
+                }
+            }
+            co = 0;
+            for (int i = 0; i < columna1; i++) {
+                if (v[0][i] >= 0) {
+                    co++;
+                }
+            }
+            y1 = 1;
+            for (int i = 0; i < columna; i++) {
+                if (i < columna1) {
+                    text.append("\t x" + (i + 1));
+
+                } else if (i >= columna1 && i < columna - 1) {
+                    text.append("\t d" + (y1));
+                    y1++;
+
+                } else {
+                    text.append("\t resul");
+
+                }
+            }
+            text.append("\n");
+
+            for (int i = 0; i < fila; i++) {
+                if (i != 0) {
+                    text.append(v2[i]);
+                }
+                for (int j = 0; j < columna; j++) {
+                    text.append("\t" + l.format(v[i][j]));
+                }
+                text.append("\n");
+            }
+            text.append("\n\n");
+
+        }
+// Después de realizar las operaciones del método Simplex
+        int y2 = 0;
+        text.append("resultado...\n");
+        text.append("z=" + v[0][columna - 1] + "\n");
+        for (int i = 1; i < fila; i++) {
+            char m1[] = v2[i].toCharArray();
+            if (m1[0] == 'x') {
+                text.append("" + v2[i] + "=" + v[v4[i]][columna - 1] + "\n");
+            }
+        }
+    }//GEN-LAST:event_jB_CALCULARActionPerformed
+
+    private void filasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filasMouseClicked
+        JOptionPane.showMessageDialog(null, "Al ingresar las restricciones suma 1 que es para la funcion objetivo ejemplo 2 restricciones mas 1 son 3 entonces colocas el 3 .");
+    }//GEN-LAST:event_filasMouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex)
-        {
+        } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Maximizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex)
-        {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(Maximizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
-        {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(Maximizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Maximizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -242,8 +492,9 @@ public class Maximizar extends javax.swing.JFrame {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField columnas;
+    private javax.swing.JTextField filas;
     private javax.swing.JButton jB_CALCULAR;
     private javax.swing.JButton jB_GENERAR;
     private javax.swing.JButton jB_LIMPIAR;
@@ -253,9 +504,9 @@ public class Maximizar extends javax.swing.JFrame {
     private javax.swing.JPanel jP_principal;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jT_NR;
-    private javax.swing.JTextField jT_NV;
-    private javax.swing.JTextArea jT_pro;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable tabla;
+    private javax.swing.JTextArea text;
     // End of variables declaration//GEN-END:variables
 
     class fondo extends JPanel {
