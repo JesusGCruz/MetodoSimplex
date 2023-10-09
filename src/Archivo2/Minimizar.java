@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Metodo;
+package Archivo2;
 
+import Metodo_compilador.Metodo_ms;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
@@ -73,7 +74,7 @@ public class Minimizar extends javax.swing.JFrame {
             }
 
         });
-   
+
     }
 
     /**
@@ -104,36 +105,50 @@ public class Minimizar extends javax.swing.JFrame {
         jP_principal.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setBackground(new java.awt.Color(255, 102, 102));
-        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 3, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lucida Fax", 3, 14)); // NOI18N
         jLabel1.setText("Numero de Variables");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 3, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Lucida Fax", 3, 14)); // NOI18N
         jLabel2.setText("Restricciones y FO");
+
+        columnas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                columnasKeyTyped(evt);
+            }
+        });
 
         filas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filasActionPerformed(evt);
             }
         });
+        filas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                filasKeyTyped(evt);
+            }
+        });
 
-        crear.setFont(new java.awt.Font("Segoe UI Semibold", 3, 12)); // NOI18N
+        crear.setFont(new java.awt.Font("Lucida Fax", 3, 12)); // NOI18N
         crear.setText("Generar Tabla");
+        crear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         crear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 crearActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI Emoji", 2, 12)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Lucida Fax", 3, 12)); // NOI18N
         jButton2.setText("Calcular");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        lim.setFont(new java.awt.Font("Segoe UI Emoji", 2, 12)); // NOI18N
+        lim.setFont(new java.awt.Font("Lucida Fax", 3, 12)); // NOI18N
         lim.setText("Limpiar");
+        lim.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 limActionPerformed(evt);
@@ -141,7 +156,11 @@ public class Minimizar extends javax.swing.JFrame {
         });
 
         jButton4.setFont(new java.awt.Font("Segoe UI Emoji", 2, 12)); // NOI18N
-        jButton4.setText("Regresar");
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Elementos/Regresar.png"))); // NOI18N
+        jButton4.setBorder(null);
+        jButton4.setBorderPainted(false);
+        jButton4.setContentAreaFilled(false);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -150,6 +169,7 @@ public class Minimizar extends javax.swing.JFrame {
 
         text.setColumns(20);
         text.setRows(5);
+        text.setEnabled(false);
         jScrollPane2.setViewportView(text);
 
         jScrollPane1.setBackground(new java.awt.Color(255, 204, 102));
@@ -168,68 +188,71 @@ public class Minimizar extends javax.swing.JFrame {
         jP_principal.setLayout(jP_principalLayout);
         jP_principalLayout.setHorizontalGroup(
             jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_principalLayout.createSequentialGroup()
-                .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jP_principalLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jP_principalLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
+                        .addComponent(jButton4)
+                        .addGap(100, 100, 100)
+                        .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(jP_principalLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(columnas, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(jP_principalLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(filas, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(133, 133, 133))
+                    .addGroup(jP_principalLayout.createSequentialGroup()
                         .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                         .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_principalLayout.createSequentialGroup()
-                                .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lim)
-                                    .addComponent(jButton2))
-                                .addGap(11, 11, 11))
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(jP_principalLayout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lim)
+                                .addGap(62, 62, 62))
                             .addGroup(jP_principalLayout.createSequentialGroup()
-                                .addComponent(columnas, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(252, 252, 252))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_principalLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(176, 176, 176)))
-                        .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(filas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(crear)))
-                .addGap(62, 62, 62))
+                                .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton2)
+                                    .addComponent(crear))
+                                .addContainerGap())))))
         );
         jP_principalLayout.setVerticalGroup(
             jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jP_principalLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2))
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(filas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(columnas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jP_principalLayout.createSequentialGroup()
-                        .addGap(206, 206, 206)
-                        .addComponent(jButton2))
-                    .addGroup(jP_principalLayout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(columnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(filas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(crear))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_principalLayout.createSequentialGroup()
+                        .addComponent(crear)
+                        .addGap(32, 32, 32)))
                 .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jP_principalLayout.createSequentialGroup()
                         .addGap(42, 42, 42)
-                        .addComponent(jScrollPane2)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
                         .addGap(43, 43, 43))
                     .addGroup(jP_principalLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(89, 89, 89)
                         .addComponent(lim)
-                        .addGap(92, 92, 92)
-                        .addComponent(jButton4)
-                        .addGap(73, 73, 73))))
+                        .addGap(89, 89, 89))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -252,35 +275,43 @@ public class Minimizar extends javax.swing.JFrame {
 
     private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-        try {
+        try
+        {
             int fila = Integer.parseInt(filas.getText());
             int columna = Integer.parseInt(columnas.getText());
             int columna1 = columna;
 
-            for (int i = 0; i < columna; i++) {
+            for (int i = 0; i < columna; i++)
+            {
                 model.addColumn("x" + (i + 1));
             }
             columna = fila + columna;
 
             model.setRowCount(fila);
             model.setColumnCount(columna);
-            for (int j = columna1; j < columna; j++) {
+            for (int j = columna1; j < columna; j++)
+            {
                 tabla.setValueAt(0, 0, j);
             }
             int i1 = 1, j1 = columna1;
-            for (int i = 1; i < fila; i++) {
-                for (int j = columna1; j < columna - 1; j++) {
-                    if (i1 == i && j1 == j) {
+            for (int i = 1; i < fila; i++)
+            {
+                for (int j = columna1; j < columna - 1; j++)
+                {
+                    if (i1 == i && j1 == j)
+                    {
                         tabla.setValueAt(1, i, j);
 
-                    } else {
+                    } else
+                    {
                         tabla.setValueAt(0, i, j);
                     }
                 }
                 j1++;
                 i1++;
             }
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             JOptionPane.showMessageDialog(null, "ingresa numeros y que sean positivos ");
         }
     }//GEN-LAST:event_crearActionPerformed
@@ -292,7 +323,8 @@ public class Minimizar extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
+        try
+        {
             text.append("Aplicacion del metodo simplex\n");
             text.append("sujeto 1a \n");
             DecimalFormat l = new DecimalFormat("0.000");
@@ -304,13 +336,18 @@ public class Minimizar extends javax.swing.JFrame {
             int y1 = 1;
 
             // Verificar que la tabla esté inicializada y tenga valores
-            if (tabla != null && tabla.getModel() != null) {
-                for (int i = 0; i < fila; i++) {
-                    for (int j = 0; j < columna; j++) {
+            if (tabla != null && tabla.getModel() != null)
+            {
+                for (int i = 0; i < fila; i++)
+                {
+                    for (int j = 0; j < columna; j++)
+                    {
                         Object value = tabla.getValueAt(i, j);
-                        if (value != null) {
+                        if (value != null)
+                        {
                             v[i][j] = Double.parseDouble(tabla.getValueAt(i, j).toString());
-                        } else {
+                        } else
+                        {
                             // Manejar el caso en el que el valor sea nulo, por ejemplo, establecerlo en 0
                             v[i][j] = 0;
                         }
@@ -318,11 +355,14 @@ public class Minimizar extends javax.swing.JFrame {
                 }
             }
 
-            for (int i = 0; i < fila; i++) {
-                if (i != 0) {
+            for (int i = 0; i < fila; i++)
+            {
+                if (i != 0)
+                {
                     text.append("d" + i);
                 }
-                for (int j = 0; j < columna; j++) {
+                for (int j = 0; j < columna; j++)
+                {
                     text.append("\t" + l.format(v[i][j]));
 
                 }
@@ -334,14 +374,18 @@ public class Minimizar extends javax.swing.JFrame {
             int v4[] = new int[fila];
 
             int co = 0;
-            while (true) {
-                if (co == columna1) {
+            while (true)
+            {
+                if (co == columna1)
+                {
                     break;
                 }
                 int f = 0, c = 0;
                 double negativo = 0;
-                for (int i = 0; i < columna1; i++) {
-                    if (v[0][i] < negativo) {
+                for (int i = 0; i < columna1; i++)
+                {
+                    if (v[0][i] < negativo)
+                    {
                         negativo = v[0][i];
                         c = i;
 
@@ -352,7 +396,8 @@ public class Minimizar extends javax.swing.JFrame {
                 text.append("Hallamos el valor del pivote");
                 text.append("" + negativo + "\n La columna es \n");
 
-                for (int i = 0; i < fila; i++) {
+                for (int i = 0; i < fila; i++)
+                {
                     text.append("" + v[i][c] + "\n");
 
                 }
@@ -362,12 +407,14 @@ public class Minimizar extends javax.swing.JFrame {
                 double menor = Double.MAX_VALUE; // Inicializamos 'menor' con un valor grande
                 double v1[] = new double[fila - 1];
                 int h = 0;
-                for (int i = 1; i < fila; i++) {
+                for (int i = 1; i < fila; i++)
+                {
                     v1[h] = v[i][columna - 1] / v[i][c];
                     text.append("" + v[i][columna - 1] + "/" + v[i][c] + "=" + v1[h] + "\n");
                     h++;
                     // Actualizamos 'menor' si encontramos un valor menor en v1
-                    if (v1[h - 1] < menor) {
+                    if (v1[h - 1] < menor)
+                    {
                         menor = v1[h - 1];
                         f = i;
                     }
@@ -379,32 +426,39 @@ public class Minimizar extends javax.swing.JFrame {
                 text.append("El pivote es " + piv);
 
                 text.append("\n Proceso de convertir a 1 el pivote, dividiendo toda la fila ");
-                for (int i = 0; i < columna; i++) {
+                for (int i = 0; i < columna; i++)
+                {
                     double va  = v[f][i];
                     v[f][i] = v[f][i] / piv;
                     text.append("" + va  + "/" + piv + "=" + v[f][i] + "\n");
 
                 }
-                for (int i = 1; i < fila; i++) {
-                    if (i == f) {
+                for (int i = 1; i < fila; i++)
+                {
+                    if (i == f)
+                    {
                         v2[i] = "x" + (c + 1);
                         v3[i] = c + 1;
                         v4[i] = i;
                     }
-                    if (v3[i] <= 0) {
+                    if (v3[i] <= 0)
+                    {
                         v2[i] = "d" + (i);
                     }
                 }
                 text.append("\n");
 
                 text.append("\n Proceso \n");
-                for (int i = 0; i < fila; i++) {
-                    if (i != f) {
+                for (int i = 0; i < fila; i++)
+                {
+                    if (i != f)
+                    {
                         text.append("\n");
                         text.append("Convierte la columna del pivote en cero, en fila " + (i + 1) + "\n");
                         double guar = 0;
                         guar = -v[i][c];
-                        for (int j = 0; j < columna; j++) {
+                        for (int j = 0; j < columna; j++)
+                        {
                             double vaa = v[i][j];
                             v[i][j] = guar * v[f][j] + v[i][j];
                             text.append("" + guar + "a" + v[f][j] + "+" + vaa + "=" + v[i][j] + "\n");
@@ -414,32 +468,41 @@ public class Minimizar extends javax.swing.JFrame {
                     }
                 }
                 co = 0;
-                for (int i = 0; i < columna1; i++) {
-                    if (v[0][i] >= 0) {
+                for (int i = 0; i < columna1; i++)
+                {
+                    if (v[0][i] >= 0)
+                    {
                         co++;
                     }
                 }
                 y1 = 1;
-                for (int i = 0; i < columna; i++) {
-                    if (i < columna1) {
+                for (int i = 0; i < columna; i++)
+                {
+                    if (i < columna1)
+                    {
                         text.append("\t x" + (i + 1));
 
-                    } else if (i >= columna1 && i < columna - 1) {
+                    } else if (i >= columna1 && i < columna - 1)
+                    {
                         text.append("\t d" + (y1));
                         y1++;
 
-                    } else {
+                    } else
+                    {
                         text.append("\t resultado");
 
                     }
                 }
                 text.append("\n");
 
-                for (int i = 0; i < fila; i++) {
-                    if (i != 0) {
+                for (int i = 0; i < fila; i++)
+                {
+                    if (i != 0)
+                    {
                         text.append(v2[i]);
                     }
-                    for (int j = 0; j < columna; j++) {
+                    for (int j = 0; j < columna; j++)
+                    {
                         text.append("\t" + l.format(v[i][j]));
                     }
                     text.append("\n");
@@ -452,26 +515,54 @@ public class Minimizar extends javax.swing.JFrame {
             int y2 = 0;
             text.append("Resultado...\n");
             text.append("z = " + v[0][columna - 1] + "\n");
-            for (int i = 1; i < fila; i++) {
+            for (int i = 1; i < fila; i++)
+            {
                 char m1[] = v2[i].toCharArray();
-                if (m1[0] == 'x') {
+                if (m1[0] == 'x')
+                {
                     text.append("" + v2[i] + " = " + v[v4[i]][columna - 1] + "\n");
                 }
                 text.append("\n");
             }
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             JOptionPane.showMessageDialog(null, "Ingresa por favor los datos requeridos ");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void limActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limActionPerformed
-       columnas.setText(" ");
+        columnas.setText(" ");
         filas.setText(" ");
         text.setText("");
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
         model.setRowCount(0); // Elimina todas las filas de la tabla
         model.setColumnCount(0); // Elimina todas las columnas de la tabla
     }//GEN-LAST:event_limActionPerformed
+
+    private void columnasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_columnasKeyTyped
+        char val = evt.getKeyChar();
+        if (Character.isLetter(val))
+        {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(rootPane, "Ingresa solo caracteres numerico.");
+
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_columnasKeyTyped
+
+    private void filasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filasKeyTyped
+        char val = evt.getKeyChar();
+        if (Character.isLetter(val))
+        {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(rootPane, "Ingresa solo caracteres numerico.");
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_filasKeyTyped
 
     /**
      * @param args the command line arguments
@@ -482,20 +573,27 @@ public class Minimizar extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+        try
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex)
+        {
             java.util.logging.Logger.getLogger(Minimizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } catch (InstantiationException ex)
+        {
             java.util.logging.Logger.getLogger(Minimizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex)
+        {
             java.util.logging.Logger.getLogger(Minimizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
+        {
             java.util.logging.Logger.getLogger(Minimizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>

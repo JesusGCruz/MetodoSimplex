@@ -1,6 +1,8 @@
 
-package Metodo;
+package Metodo_compilador;
 
+import Archivo2.Minimizar;
+import Archivo1.Maximizar;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -44,6 +46,7 @@ public class Metodo_ms extends javax.swing.JFrame {
 
         jB_MAXIMIZAR.setFont(new java.awt.Font("Lucida Fax", 3, 18)); // NOI18N
         jB_MAXIMIZAR.setText("Maximizar");
+        jB_MAXIMIZAR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jB_MAXIMIZAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jB_MAXIMIZARActionPerformed(evt);
@@ -52,6 +55,7 @@ public class Metodo_ms extends javax.swing.JFrame {
 
         jB_MINIMIZAR.setFont(new java.awt.Font("Lucida Fax", 3, 18)); // NOI18N
         jB_MINIMIZAR.setText("Minimizar");
+        jB_MINIMIZAR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jB_MINIMIZAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jB_MINIMIZARActionPerformed(evt);

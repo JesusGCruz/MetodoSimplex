@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Metodo;
+package Archivo1;
 
+import Metodo_compilador.Metodo_ms;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -16,6 +18,7 @@ import javax.swing.JPanel;
 public class Maximizar extends javax.swing.JFrame {
 
     fondo f = new fondo();
+
     public Maximizar() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -42,6 +45,7 @@ public class Maximizar extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jT_pro = new javax.swing.JTextArea();
+        jB_regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,66 +54,95 @@ public class Maximizar extends javax.swing.JFrame {
         jL_nv.setFont(new java.awt.Font("Lucida Fax", 3, 14)); // NOI18N
         jL_nv.setText("Numero de Variables:");
 
+        jT_NV.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jT_NVKeyTyped(evt);
+            }
+        });
+
         jL_nR.setFont(new java.awt.Font("Lucida Fax", 3, 14)); // NOI18N
         jL_nR.setText("Numero de Restricciones y FO:");
 
+        jT_NR.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jT_NRKeyTyped(evt);
+            }
+        });
+
         jB_GENERAR.setFont(new java.awt.Font("Lucida Fax", 3, 14)); // NOI18N
         jB_GENERAR.setText("Generar Matriz");
+        jB_GENERAR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jB_CALCULAR.setFont(new java.awt.Font("Lucida Fax", 3, 18)); // NOI18N
         jB_CALCULAR.setText("Calcular");
+        jB_CALCULAR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jB_LIMPIAR.setFont(new java.awt.Font("Lucida Fax", 3, 18)); // NOI18N
         jB_LIMPIAR.setText("Limpiar");
+        jB_LIMPIAR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jT_pro.setColumns(20);
         jT_pro.setRows(5);
         jT_pro.setEnabled(false);
         jScrollPane2.setViewportView(jT_pro);
 
+        jB_regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Elementos/Regresar.png"))); // NOI18N
+        jB_regresar.setBorder(null);
+        jB_regresar.setBorderPainted(false);
+        jB_regresar.setContentAreaFilled(false);
+        jB_regresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jB_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_regresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jP_principalLayout = new javax.swing.GroupLayout(jP_principal);
         jP_principal.setLayout(jP_principalLayout);
         jP_principalLayout.setHorizontalGroup(
             jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jP_principalLayout.createSequentialGroup()
-                .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jP_principalLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jL_nv, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jT_NV, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jP_principalLayout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(jB_GENERAR)))
-                .addGap(30, 30, 30)
-                .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jP_principalLayout.createSequentialGroup()
-                        .addComponent(jB_CALCULAR)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jB_LIMPIAR)
-                        .addGap(114, 114, 114))
-                    .addGroup(jP_principalLayout.createSequentialGroup()
-                        .addComponent(jL_nR, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jT_NR, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(87, Short.MAX_VALUE))))
+                .addGap(66, 66, 66)
+                .addComponent(jB_GENERAR)
+                .addGap(116, 116, 116)
+                .addComponent(jB_CALCULAR)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                .addComponent(jB_LIMPIAR)
+                .addGap(114, 114, 114))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_principalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jL_nv, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jT_NV, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(jL_nR, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jT_NR, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
             .addGroup(jP_principalLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE))
+                .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jP_principalLayout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)))
+                    .addGroup(jP_principalLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jB_regresar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jP_principalLayout.setVerticalGroup(
             jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jP_principalLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(14, 14, 14)
+                .addComponent(jB_regresar)
+                .addGap(18, 18, 18)
                 .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jL_nv)
-                    .addComponent(jT_NV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jT_NR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jL_nR)
-                    .addComponent(jT_NR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
+                    .addComponent(jT_NV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jL_nv))
+                .addGap(18, 18, 18)
                 .addGroup(jP_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jB_GENERAR)
                     .addComponent(jB_CALCULAR)
@@ -117,7 +150,7 @@ public class Maximizar extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -134,6 +167,39 @@ public class Maximizar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jB_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_regresarActionPerformed
+        Metodo_ms m = new Metodo_ms();
+        m.setVisible(true);
+        dispose();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jB_regresarActionPerformed
+
+    private void jT_NVKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jT_NVKeyTyped
+        char val = evt.getKeyChar();
+        if (Character.isLetter(val))
+        {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(rootPane, "Ingresa solo caracteres numerico.");
+
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jT_NVKeyTyped
+
+    private void jT_NRKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jT_NRKeyTyped
+        char val = evt.getKeyChar();
+        if (Character.isLetter(val))
+        {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(rootPane, "Ingresa solo caracteres numerico.");
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jT_NRKeyTyped
 
     /**
      * @param args the command line arguments
@@ -181,6 +247,7 @@ public class Maximizar extends javax.swing.JFrame {
     private javax.swing.JButton jB_CALCULAR;
     private javax.swing.JButton jB_GENERAR;
     private javax.swing.JButton jB_LIMPIAR;
+    private javax.swing.JButton jB_regresar;
     private javax.swing.JLabel jL_nR;
     private javax.swing.JLabel jL_nv;
     private javax.swing.JPanel jP_principal;
