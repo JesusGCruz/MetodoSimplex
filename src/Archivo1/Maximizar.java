@@ -1,4 +1,5 @@
 package Archivo1;
+//JGC
 
 import Metodo_compilador.Metodo_ms;
 import java.awt.Graphics;
@@ -10,8 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 public class Maximizar extends javax.swing.JFrame {
-
-    fondo f = new fondo();
 
     public Maximizar() {
         initComponents();
@@ -124,6 +123,7 @@ public class Maximizar extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jScrollPane3);
 
         text.setColumns(20);
+        text.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         text.setRows(5);
         text.setEnabled(false);
         jScrollPane2.setViewportView(text);
@@ -225,7 +225,7 @@ public class Maximizar extends javax.swing.JFrame {
         if (Character.isLetter(val)) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(rootPane, "Ingresa solo caracteres numerico.");
+            JOptionPane.showMessageDialog(rootPane, "Ingresa solo caracteres numericos.");
 
         }
 
@@ -237,10 +237,9 @@ public class Maximizar extends javax.swing.JFrame {
         if (Character.isLetter(val)) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(rootPane, "Ingresa solo caracteres numerico.");
+            JOptionPane.showMessageDialog(rootPane, "Ingresa solo caracteres numericos.");
 
         }
-        // TODO add your handling code here:
     }//GEN-LAST:event_filasKeyTyped
 
     private void jB_GENERARMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jB_GENERARMouseClicked
@@ -248,6 +247,7 @@ public class Maximizar extends javax.swing.JFrame {
     }//GEN-LAST:event_jB_GENERARMouseClicked
 
     private void jB_GENERARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_GENERARActionPerformed
+        tablaExis = true;
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
         try {
             int fila = Integer.parseInt(filas.getText());
@@ -278,10 +278,10 @@ public class Maximizar extends javax.swing.JFrame {
                 i1++;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ingresa numeros y que sean positivos ");
+            JOptionPane.showMessageDialog(null, "Favor de ingresar numeros positivos.");
         }
-        JOptionPane.showMessageDialog(null, "En la primer fila colocar los valores de z en negativo, de lo"
-                + " contrario no dará los resultados correctos y al terminar de ingresar los valores a la tabla teclear enter para que se guarden los valores.");
+        JOptionPane.showMessageDialog(null, "En la primer fila se colocan los valores de Z en negativo, de lo"
+                + " contrario no dará los resultados correctos y al terminar de ingresar los valores a la tabla teclear enter para guardarlos valores.");
     }//GEN-LAST:event_jB_GENERARActionPerformed
 
     private void columnasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_columnasMouseClicked
@@ -289,176 +289,183 @@ public class Maximizar extends javax.swing.JFrame {
     }//GEN-LAST:event_columnasMouseClicked
 
     private void jB_LIMPIARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_LIMPIARActionPerformed
-        columnas.setText(" ");
-        filas.setText(" ");
-        text.setText("");
+        //Se regresa a null para evitar modificaciones futuras no deseadas en los datos ingresados.
+        columnas.setText(null);
+        filas.setText(null);
+        text.setText(null);
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
         model.setRowCount(0); // Elimina todas las filas de la tabla
-        model.setColumnCount(0); // Elimina todas las columnas de la tabla        // TODO add your handling code here:
+        model.setColumnCount(0); // Elimina todas las columnas de la tabla
+        tablaExis = false; //Detecta la eliminación de la tabla
     }//GEN-LAST:event_jB_LIMPIARActionPerformed
 
     private void jB_CALCULARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_CALCULARActionPerformed
-        text.append("metodo simplex\n");
-        DecimalFormat l = new DecimalFormat("0.000");
-        int fila = Integer.parseInt(filas.getText());
-        int columna = Integer.parseInt(columnas.getText());
-        int columna1 = columna;
-        columna = fila + columna;
-        double v[][] = new double[fila][columna];
-        int y1 = 1;
+        if (tablaExis) {
+            text.append("Metodo simplex\n");
+            DecimalFormat l = new DecimalFormat("0.000");
+            int fila = Integer.parseInt(filas.getText());
+            int columna = Integer.parseInt(columnas.getText());
+            int columna1 = columna;
+            columna = fila + columna;
+            double v[][] = new double[fila][columna];
+            int y1 = 1;
 
-        //Verificar que la tabla esté inicializada y tenga valores
-        if (tabla != null && tabla.getModel() != null) {
-            for (int i = 0; i < fila; i++) {
-                for (int j = 0; j < columna; j++) {
-                    Object value = tabla.getValueAt(i, j);
-                    if (value != null) {
-                        v[i][j] = Double.parseDouble(tabla.getValueAt(i, j).toString());
-                    } else {
-//Manejar el caso en el que el valor sea nulo, por ejemplo, establecerlo en 0
-                        v[i][j] = 0.0;
-                    }
-                }
-            }
-        }
-
-        for (int i = 0; i < fila; i++) {
-            if (i != 0) {
-                text.append("d" + i);
-            }
-            for (int j = 0; j < columna; j++) {
-                text.append("\t" + l.format(v[i][j]));
-
-            }
-            text.append("\n");
-        }
-        text.append("\n\n");
-        String v2[] = new String[fila];
-        int v3[] = new int[fila];
-        int v4[] = new int[fila];
-
-        int co = 0;
-        while (true) {
-            if (co == columna1) {
-                break;
-            }
-            int f = 0, c = 0;
-            double negativo = 0;
-            for (int i = 0; i < columna1; i++) {
-                if (v[0][i] < negativo) {
-                    negativo = v[0][i];
-                    c = i;
-
-                }
-
-            }
-            text.append("hallamos el valor del pivote");
-            text.append("" + negativo + "\n la columna es \n");
-
-            for (int i = 0; i < fila; i++) {
-                text.append("" + v[i][c] + "\n");
-
-            }
-            text.append("\n");
-            text.append("\n dividiendo la columna\n");
-            double menor = Double.MAX_VALUE; // Inicializamos 'menor' con un valor grande
-            double v1[] = new double[fila - 1];
-            int h = 0;
-            for (int i = 1; i < fila; i++) {
-                v1[h] = v[i][columna - 1] / v[i][c];
-                text.append("" + v[i][columna - 1] + "/" + v[i][c] + "=" + v1[h] + "\n");
-                h++;
-//                 Actualizamos 'menor' si encontramos un valor menor en v1
-                if (v1[h - 1] < menor) {
-                    menor = v1[h - 1];
-                    f = i;
-                }
-            }
-            text.append("el menor de la distancia es" + menor + "\n");
-            double piv = v[f][c];
-            text.append("el pivote es " + piv);
-
-            text.append("\n proceso de convertir a 1 el pivote, dividiendo toda la fila ");
-            for (int i = 0; i < columna; i++) {
-                double va  = v[f][i];
-                v[f][i] = v[f][i] / piv;
-                text.append("" + va+  "/" + piv + "=" + v[f][i] + "\n");
-
-            }
-            for (int i = 1; i < fila; i++) {
-                if (i == f) {
-                    v2[i] = "x" + (c + 1);
-                    v3[i] = c + 1;
-                    v4[i] = i;
-                }
-                if (v3[i] <= 0) {
-                    v2[i] = "d" + (i);
-                }
-            }
-            text.append("\n proceso \n");
-            for (int i = 0; i < fila; i++) {
-                if (i != f) {
-                    text.append("convierte la columna del pivote en cero ,en fila" + (i + 1) + "\n");
-
-                    double guar = 0;
-                    guar = -v[i][c];
+            //Verificar que la tabla esté inicializada y tenga valores
+            if (tabla != null && tabla.getModel() != null) {
+                for (int i = 0; i < fila; i++) {
                     for (int j = 0; j < columna; j++) {
-                        double vaa = v[i][j];
-                        v[i][j] = guar * v[f][j] + v[i][j];
-                        text.append("" + guar + "a" + v[f][j] + "+" + vaa + "=" + v[i][j] + "\n");
-
+                        Object value = tabla.getValueAt(i, j);
+                        if (value != null) {
+                            v[i][j] = Double.parseDouble(tabla.getValueAt(i, j).toString());
+                        } else {
+//Manejar el caso en el que el valor sea nulo, por ejemplo, establecerlo en 0
+                            v[i][j] = 0.0;
+                        }
                     }
-
                 }
             }
-            co = 0;
-            for (int i = 0; i < columna1; i++) {
-                if (v[0][i] >= 0) {
-                    co++;
-                }
-            }
-            y1 = 1;
-            for (int i = 0; i < columna; i++) {
-                if (i < columna1) {
-                    text.append("\t x" + (i + 1));
-
-                } else if (i >= columna1 && i < columna - 1) {
-                    text.append("\t d" + (y1));
-                    y1++;
-
-                } else {
-                    text.append("\t resul");
-
-                }
-            }
-            text.append("\n");
 
             for (int i = 0; i < fila; i++) {
                 if (i != 0) {
-                    text.append(v2[i]);
+                    text.append("d" + i);
                 }
                 for (int j = 0; j < columna; j++) {
                     text.append("\t" + l.format(v[i][j]));
+
                 }
                 text.append("\n");
             }
             text.append("\n\n");
+            String v2[] = new String[fila];
+            int v3[] = new int[fila];
+            int v4[] = new int[fila];
 
-        }
-// Después de realizar las operaciones del método Simplex
-        int y2 = 0;
-        text.append("resultado...\n");
-        text.append("z=" + v[0][columna - 1] + "\n");
-        for (int i = 1; i < fila; i++) {
-            char m1[] = v2[i].toCharArray();
-            if (m1[0] == 'x') {
-                text.append("" + v2[i] + "=" + v[v4[i]][columna - 1] + "\n");
+            int co = 0;
+            while (true) {
+                if (co == columna1) {
+                    break;
+                }
+                int f = 0, c = 0;
+                double negativo = 0;
+                for (int i = 0; i < columna1; i++) {
+                    if (v[0][i] < negativo) {
+                        negativo = v[0][i];
+                        c = i;
+
+                    }
+
+                }
+                text.append("Se encuentra el valor pivote: ");
+                text.append("" + negativo + "\nla columna es \n");
+
+                for (int i = 0; i < fila; i++) {
+                    text.append("" + v[i][c] + "\n");
+
+                }
+                text.append("\n");
+                text.append("\n Dividiendo la columna\n");
+                double menor = Double.MAX_VALUE; // Inicializamos 'menor' con un valor grande
+                double v1[] = new double[fila - 1];
+                int h = 0;
+                for (int i = 1; i < fila; i++) {
+                    v1[h] = v[i][columna - 1] / v[i][c];
+                    text.append("" + v[i][columna - 1] + "/" + v[i][c] + "=" + v1[h] + "\n");
+                    h++;
+//                 Actualizamos 'menor' si encontramos un valor menor en v1
+                    if (v1[h - 1] < menor) {
+                        menor = v1[h - 1];
+                        f = i;
+                    }
+                }
+                text.append("El menor de la distancia es " + menor + "\n");
+                double piv = v[f][c];
+                text.append("El pivote es " + piv);
+
+                text.append("\nProceso de convertir a 1 el pivote, se divide toda la fila ");
+                for (int i = 0; i < columna; i++) {
+                    double va  = v[f][i];
+                    v[f][i] = v[f][i] / piv;
+                    text.append("" + va+  "/" + piv + " = " + v[f][i] + "\n");
+
+                }
+                for (int i = 1; i < fila; i++) {
+                    if (i == f) {
+                        v2[i] = "x" + (c + 1);
+                        v3[i] = c + 1;
+                        v4[i] = i;
+                    }
+                    if (v3[i] <= 0) {
+                        v2[i] = "d" + (i);
+                    }
+                }
+                text.append("\nProceso \n");
+                for (int i = 0; i < fila; i++) {
+                    if (i != f) {
+                        text.append("Convierte la columna pivote en cero, en la fila " + (i + 1) + "\n");
+
+                        double guar = 0;
+                        guar = -v[i][c];
+                        for (int j = 0; j < columna; j++) {
+                            double vaa = v[i][j];
+                            v[i][j] = guar * v[f][j] + v[i][j];
+                            text.append("" + guar + " a " + v[f][j] + "+" + vaa + " = " + v[i][j] + "\n");
+
+                        }
+
+                    }
+                }
+                co = 0;
+                for (int i = 0; i < columna1; i++) {
+                    if (v[0][i] >= 0) {
+                        co++;
+                    }
+                }
+                y1 = 1;
+                for (int i = 0; i < columna; i++) {
+                    if (i < columna1) {
+                        text.append("\t x" + (i + 1));
+
+                    } else if (i >= columna1 && i < columna - 1) {
+                        text.append("\t d" + (y1));
+                        y1++;
+
+                    } else {
+                        text.append("\t resultado");
+
+                    }
+                }
+                text.append("\n");
+
+                for (int i = 0; i < fila; i++) {
+                    if (i != 0) {
+                        text.append(v2[i]);
+                    }
+                    for (int j = 0; j < columna; j++) {
+                        text.append("\t" + l.format(v[i][j]));
+                    }
+                    text.append("\n");
+                }
+                text.append("\n\n");
+
             }
+// Después de realizar las operaciones del método Simplex
+            int y2 = 0;
+            text.append("Resultados:\n");
+            text.append("Z = " + v[0][columna - 1] + "\n");
+            for (int i = 1; i < fila; i++) {
+                char m1[] = v2[i].toCharArray();
+                if (m1[0] == 'x') {
+                    text.append("" + v2[i] + " = " + v[v4[i]][columna - 1] + "\n");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Favor de primero generar y llenar la matriz.");
         }
+
     }//GEN-LAST:event_jB_CALCULARActionPerformed
 
     private void filasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filasMouseClicked
-        JOptionPane.showMessageDialog(null, "Al ingresar las restricciones suma 1 que es para la funcion objetivo ejemplo 2 restricciones mas 1 son 3 entonces colocas el 3 .");
+        JOptionPane.showMessageDialog(null, "Al ingresar las restricciones suma 1 por la funcion objetivo. Ejemplo: 2 restricciones más 1 son 3 entonces se ingresa el 3 .");
     }//GEN-LAST:event_filasMouseClicked
 
     public static void main(String args[]) {
@@ -492,6 +499,8 @@ public class Maximizar extends javax.swing.JFrame {
             }
         });
     }
+    fondo f = new fondo();
+    boolean tablaExis = false; //Evita una excepción si se da click en calcular antes de generar la tabla.
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField columnas;
     private javax.swing.JTextField filas;
